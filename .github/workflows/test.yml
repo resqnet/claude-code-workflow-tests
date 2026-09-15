@@ -1,0 +1,23 @@
+name: workflow tests
+
+on:
+  push:
+    paths:
+      - ".claude/**"
+      - ".github/workflows/test.yml"
+  pull_request:
+    paths:
+      - ".claude/**"
+      - ".github/workflows/test.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Run workflow tests
+        working-directory: .claude/skills/review-files
+        run: node workflow.test.cjs
